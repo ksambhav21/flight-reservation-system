@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.exception;
+package org.ideyalabs.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handler(IdNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
-
-
-
 
     @ExceptionHandler(DuplicacyException.class)
     public ResponseEntity<String> duplicateValueHandler(DuplicacyException e) {

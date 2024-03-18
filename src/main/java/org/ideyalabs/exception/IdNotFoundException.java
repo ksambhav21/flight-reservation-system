@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.exception;
+package org.ideyalabs.exception;
 
 public class IdNotFoundException extends RuntimeException {
 
@@ -10,8 +10,6 @@ public class IdNotFoundException extends RuntimeException {
         super(message);
 
     }
-
-
 
 }
 

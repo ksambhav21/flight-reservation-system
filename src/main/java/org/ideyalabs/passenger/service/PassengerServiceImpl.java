@@ -3,7 +3,7 @@ package org.ideyalabs.passenger.service;
 import org.ideyalabs.passenger.dto.PassengerRequestDto;
 import org.ideyalabs.passenger.dto.PassengerResponseDto;
 import org.ideyalabs.passenger.entity.Passenger;
-import org.ideyalabs.passenger.exception.IdNotFoundException;
+import org.ideyalabs.exception.IdNotFoundException;
 import org.ideyalabs.passenger.repository.PassengerRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
