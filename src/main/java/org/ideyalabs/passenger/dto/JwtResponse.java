@@ -1,19 +1,17 @@
 package org.ideyalabs.passenger.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class PassengerRequestDto {
+@AllArgsConstructor
+@Builder
+public class JwtResponse {
 
-    private String name;
-
-    private String mobileNumber;
-
+    private String jwtToken;
     private String email;
-
-    private String password;
 }
+

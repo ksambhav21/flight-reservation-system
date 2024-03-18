@@ -1,22 +1,19 @@
 package org.ideyalabs.passenger.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class PassengerResponseDto {
+@AllArgsConstructor
+@Builder
+public class JwtRequest {
 
-    private Long passngerId;
-    private String name;
-
-    private String mobileNumber;
-
+//    @NotEmpty(message="must not be null or empty")
     private String email;
-
+//    @NotEmpty(message="must not be null or empty")
     private String password;
 
-    private String role;
 }
