@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.jwt;
+package org.ideyalabs.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

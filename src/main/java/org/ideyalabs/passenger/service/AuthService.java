@@ -5,9 +5,9 @@ import org.ideyalabs.passenger.dto.JwtResponse;
 import org.ideyalabs.passenger.dto.PassengerRequestDto;
 import org.ideyalabs.passenger.dto.PassengerResponseDto;
 import org.ideyalabs.passenger.entity.Passenger;
-import org.ideyalabs.passenger.jwt.JwtHelper;
+import org.ideyalabs.jwt.JwtHelper;
 import org.ideyalabs.passenger.repository.PassengerRepo;
-import org.ideyalabs.passenger.security.PassengerDetailsServiceImpl;
+import org.ideyalabs.security.PassengerDetailsServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class AuthService {

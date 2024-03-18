@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.jwt;
+package org.ideyalabs.jwt;
 
 
 import io.jsonwebtoken.Claims;

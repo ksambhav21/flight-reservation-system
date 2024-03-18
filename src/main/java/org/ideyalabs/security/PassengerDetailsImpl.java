@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.security;
+package org.ideyalabs.security;
 
 import org.ideyalabs.passenger.entity.Passenger;
 import org.springframework.security.core.GrantedAuthority;
