@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.jwt;
+package org.ideyalabs.jwt;
 
 import com.ks.blog.services.UserDetailsServiceImpl;
 import io.jsonwebtoken.io.IOException;

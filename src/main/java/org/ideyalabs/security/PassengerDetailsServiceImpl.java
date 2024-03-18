@@ -1,4 +1,4 @@
-package org.ideyalabs.passenger.security;
+package org.ideyalabs.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
