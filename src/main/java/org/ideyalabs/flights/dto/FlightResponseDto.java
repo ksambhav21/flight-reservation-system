@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlightResponseDto {
-    private Integer flightId;
+    private Long flightId;
     private String flightName;
     private LocalDateTime DepartureTime;
     private LocalDateTime ArrivalTime;
