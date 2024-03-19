@@ -36,8 +36,8 @@ public class PassengerServiceImpl implements PassengerService{
 
 
         @Override
-public PassengerResponseDto getPassengerById(Long id) {
-            Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
+        public PassengerResponseDto getPassengerById(Long id) {
+            Optional<Passenger> optionalPassenger = passengerRepository.findByPassengerId(id);
             return this.modelMapper.map(optionalPassenger.orElseThrow(() -> new IdNotFoundException("no such passenger exists")),PassengerResponseDto.class);
         }
 
@@ -49,7 +49,7 @@ public PassengerResponseDto getPassengerById(Long id) {
 
         @Override
         public PassengerResponseDto updatePassenger(Long id, PassengerRequestDto passengerRequestDto) {
-            Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
+            Optional<Passenger> optionalPassenger = passengerRepository.findByPassengerId(id);
         if (optionalPassenger.isEmpty()) {
             throw new IdNotFoundException("no such passenger exists");
         }
@@ -70,7 +70,11 @@ public PassengerResponseDto getPassengerById(Long id) {
 
         @Override
         public String deletePassenger(Long id) {
-            passengerRepository.deleteById(id);
+            Optional<Passenger> optionalPassenger = passengerRepository.findByPassengerId(id);
+            if (optionalPassenger.isEmpty()) {
+                throw new IdNotFoundException("no such passenger exists");
+            }
+            passengerRepository.delete(optionalPassenger.get());
             return "deleted successfully";
         }
 

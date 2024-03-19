@@ -16,6 +16,7 @@ public class PassengerResponseDto {
 
     private String email;
 
+
     private String password;
 
     private String role;
