@@ -41,6 +41,9 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public FlightResponseDto addFlight(FlightRequestDto flightRequestDto) {
         Flight flight = modelMapper.map(flightRequestDto, Flight.class);
+        if(flight.getAvailableSeats() > flight.getCapacity()){
+            throw new IllegalArgumentException("Available seats cannot be more than capacity");
+        }
         flightRepository.save(flight);
         return modelMapper.map(flight, FlightResponseDto.class);
     }
