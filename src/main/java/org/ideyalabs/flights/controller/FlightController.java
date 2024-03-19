@@ -29,7 +29,7 @@ public class FlightController {
         return flightService.getFlightById(id);
     }
 
-    @PostMapping
+    @PostMapping("/flight")
     public FlightResponseDto addFlight(@RequestBody FlightRequestDto flight) {
         return flightService.addFlight(flight);
     }
@@ -41,7 +41,6 @@ public class FlightController {
 
     @DeleteMapping("/flight/{id}")
     public String deleteFlight(@PathVariable("id") Integer id) {
-
         return flightService.deleteFlight(id);
     }
 }

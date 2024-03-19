@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FlightRequestDto {
     private String flightName;
-    private String flightNumber;
     private LocalDateTime DepartureTime;
     private LocalDateTime ArrivalTime;
     private Integer capacity;
