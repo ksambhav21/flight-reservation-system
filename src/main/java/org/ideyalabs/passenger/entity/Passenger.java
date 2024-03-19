@@ -16,4 +16,6 @@ public class Passenger {
     private String name;
     private String mobileNumber;
     private String email;
+    private String password;
+    private String role;
 }

@@ -5,7 +5,7 @@ import org.ideyalabs.passenger.dto.JwtResponse;
 import org.ideyalabs.passenger.dto.PassengerRequestDto;
 import org.ideyalabs.passenger.dto.PassengerResponseDto;
 import org.ideyalabs.jwt.JwtHelper;
-import org.ideyalabs.passenger.service.AuthService;
+import org.ideyalabs.passenger.service.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class AuthController {
     private JwtHelper helper;
 
     @Autowired
-    private AuthService authService;
+    private AuthServiceImpl authService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> addUser(@RequestBody PassengerRequestDto passengerDto)
@@ -35,8 +35,6 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> login( @RequestBody JwtRequest request) {
-
-
 
         return new ResponseEntity<>(authService.signin(request), HttpStatus.OK);
     }

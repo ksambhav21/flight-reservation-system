@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PassengerRepo extends JpaRepository<Passenger,Long> {
 
-    Optional<Passenger> findByPassengerId(Long passngerId);
+    Optional<Passenger> findByPassengerId(Long passengerId);
     Optional<Passenger> findByEmail(String email);
 
 }

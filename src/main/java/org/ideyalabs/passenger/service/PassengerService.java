@@ -10,7 +10,7 @@ public interface PassengerService {
 
     PassengerResponseDto updatePassenger(Long id, PassengerRequestDto passenger);
 
-    PassengerResponseDto createPassenger(PassengerRequestDto passenger);
+
 
     PassengerResponseDto getPassengerById(Long id);
 
