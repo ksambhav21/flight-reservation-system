@@ -33,14 +33,14 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public List<ReservationResponseDto> getAllReservationsByPassenger(Integer id) {
-        return reservationRepository.findByPassengerId(id).stream()
+        return reservationRepository.findByPassenger_PassengerId(id).stream()
                 .map(reservation -> modelMapper.map(reservation, ReservationResponseDto.class))
                 .toList();
     }
 
     @Override
     public List<ReservationResponseDto> getAllReservationsByFlight(Integer id) {
-        List<Reservation> reservations = reservationRepository.findByFlightId(id);
+        List<Reservation> reservations = reservationRepository.findByFlight_FlightId(id);
         // Map reservations to ReservationResponseDto
         return reservations.stream()
                 .map(reservation -> modelMapper.map(reservation, ReservationResponseDto.class))
