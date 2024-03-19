@@ -36,11 +36,11 @@ public class PassengerController {
         return new ResponseEntity<>(passenger, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createPassenger(@RequestBody PassengerRequestDto passenger) {
-        PassengerResponseDto createdPassenger = passengerService.createPassenger(passenger);
-        return new ResponseEntity<>(createdPassenger, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<?> createPassenger(@RequestBody PassengerRequestDto passenger) {
+//        PassengerResponseDto createdPassenger = passengerService.createPassenger(passenger);
+//        return new ResponseEntity<>(createdPassenger, HttpStatus.CREATED);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePassenger(@PathVariable Long id, @RequestBody PassengerRequestDto passenger) {

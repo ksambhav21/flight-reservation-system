@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
-    List<Reservation> findByFlightId(Integer id);
-    List<Reservation> findByPassengerId(Integer id);
+    List<Reservation> findByFlight_FlightId(Integer id);
+    List<Reservation> findByPassenger_PassengerId(Integer id);
 }
