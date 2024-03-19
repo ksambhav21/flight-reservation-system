@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,14 +29,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class SecurityConfig {
 
-    private static final String[] PUBLIC_URLS={"/reservations/**"};
+    private static final String[] PUBLIC_URLS={"/passengers-api/v1/**","/auth-api/v1/**","/flight-api/v1","/reservation-api/v1"};
 
 
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
-    private JwtAuthFilter authFilter;
+    private JwtAuthFilter jwtAuthFilter;
 
     // User Creation
     @Bean
@@ -48,17 +49,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers("/flights/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated())
-                .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint))
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint));
 
-        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         http.authenticationProvider(authenticationProvider());
-
+        System.out.println("reached here...");
         return http.build();
     }
 

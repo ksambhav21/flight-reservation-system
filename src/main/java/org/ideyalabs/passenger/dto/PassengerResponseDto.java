@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PassengerResponseDto {
 
-    private Long passngerId;
+    private Long passengerId;
     private String name;
 
     private String mobileNumber;
