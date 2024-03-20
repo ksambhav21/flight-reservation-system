@@ -41,12 +41,12 @@ public class ReservationController {
         return flightService.getFlightByDepartureTime(departureTime);
     }
     @GetMapping("/search/flight/source/{source}")
-    public List<FlightResponseDto> getAllFlightsBySource(@PathVariable("source") LocalDateTime source){
-        return flightService.getFlightByDepartureTime(source);
+    public List<FlightResponseDto> getAllFlightsBySource(@PathVariable("source") String source){
+        return flightService.getFlightBySource(source);
     }
     @GetMapping("/search/flight/destination/{destination}")
-    public List<FlightResponseDto> getAllFlightsByDestination(@PathVariable("destination") LocalDateTime destination){
-        return flightService.getFlightByDepartureTime(destination);
+    public List<FlightResponseDto> getAllFlightsByDestination(@PathVariable("destination") String destination){
+        return flightService.getFlightByDestination(destination);
     }
 
     @GetMapping("/reservations/flight/{id}")

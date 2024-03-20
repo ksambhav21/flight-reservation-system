@@ -29,8 +29,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class SecurityConfig {
 
-    private static final String[] PUBLIC_URLS={"/auth-api/v1/**", "/reservation-api/v1","/passengers-api/v1/**", "/flight-api/v1"};
-    private static final String[] ADMIN_URLS = {};
+    private static final String[] PUBLIC_URLS={"/auth-api/v1/**"};
+    private static final String[] ADMIN_URLS = {"/passengers-api/v1/**", "/flight-api/v1/**"};
 
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
@@ -53,14 +53,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers(ADMIN_URLS).hasRole("ADMIN")
-
-
+                        .requestMatchers("/reservation-api/v1/**").hasRole("USER")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint));
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         http.authenticationProvider(authenticationProvider());
-        System.out.println("reached here...");
+
         return http.build();
     }
 
