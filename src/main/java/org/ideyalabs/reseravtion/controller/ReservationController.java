@@ -1,22 +1,52 @@
 package org.ideyalabs.reseravtion.controller;
 
+import org.ideyalabs.flights.dto.FlightResponseDto;
+import org.ideyalabs.flights.service.FlightService;
 import org.ideyalabs.reseravtion.dto.ReservationRequestDto;
 import org.ideyalabs.reseravtion.dto.ReservationResponseDto;
 import org.ideyalabs.reseravtion.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/reservation-api/v1")
 public class ReservationController {
-    @Autowired
+
     private ReservationService reservationService;
+
+
+    private FlightService flightService;
+
+    @Autowired
+    public ReservationController(ReservationService reservationService, FlightService flightService){
+        this.flightService=flightService;
+        this.reservationService=reservationService;
+    }
 
     @GetMapping("/reservations/passenger/{id}")
     public List<ReservationResponseDto> getAllReservationsByPassenger(@PathVariable("id") Integer passengerId){
         return reservationService.getAllReservationsByPassenger(passengerId);
+    }
+
+    @GetMapping("/search/flight/arrival/{arrivalTime}")
+    public List<FlightResponseDto> getAllFlightsByArrivalTime(@PathVariable("arrivalTime") LocalDateTime arrivalTime){
+        return flightService.getFlightByArrivalTime(arrivalTime);
+    }
+
+    @GetMapping("/search/flight/departure/{departureTime}")
+    public List<FlightResponseDto> getAllFlightsByDepartureTime(@PathVariable("departureTime") LocalDateTime departureTime){
+        return flightService.getFlightByDepartureTime(departureTime);
+    }
+    @GetMapping("/search/flight/source/{source}")
+    public List<FlightResponseDto> getAllFlightsBySource(@PathVariable("source") LocalDateTime source){
+        return flightService.getFlightByDepartureTime(source);
+    }
+    @GetMapping("/search/flight/destination/{destination}")
+    public List<FlightResponseDto> getAllFlightsByDestination(@PathVariable("destination") LocalDateTime destination){
+        return flightService.getFlightByDepartureTime(destination);
     }
 
     @GetMapping("/reservations/flight/{id}")

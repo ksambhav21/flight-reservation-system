@@ -93,11 +93,11 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public String deleteReservationById(Integer id) {
-        Optional<Reservation> reservation = reservationRepository.findById(id);
-        if (reservation.isEmpty()) {
-            throw new IdNotFoundException("Reservation with ID " + id + " not found");
-        }
-        reservationRepository.delete(reservation.get());
+        Reservation existingReservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("Reservation with ID " + id + " not found"));
+        reservationRepository.delete(existingReservation);
         return "Reservation with ID " + id + " deleted successfully";
     }
+
+
 }
