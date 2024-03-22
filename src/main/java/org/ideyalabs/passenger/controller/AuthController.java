@@ -1,5 +1,6 @@
 package org.ideyalabs.passenger.controller;
 
+import jakarta.validation.Valid;
 import org.ideyalabs.passenger.dto.JwtRequest;
 import org.ideyalabs.passenger.dto.JwtResponse;
 import org.ideyalabs.passenger.dto.PassengerRequestDto;
@@ -30,7 +31,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> addUser(@RequestBody PassengerRequestDto passengerDto)
+    public ResponseEntity<?> addUser(@Valid @RequestBody PassengerRequestDto passengerDto)
     {
         logger.info("sign up controller called");
 

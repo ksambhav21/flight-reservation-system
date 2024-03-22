@@ -1,6 +1,6 @@
-package org.ideyalabs.reseravtion.repository;
+package org.ideyalabs.reservation.repository;
 
-import org.ideyalabs.reseravtion.entity.Reservation;
+import org.ideyalabs.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,10 +1,11 @@
-package org.ideyalabs.reseravtion.controller;
+package org.ideyalabs.reservation.controller;
 
+import jakarta.validation.Valid;
 import org.ideyalabs.flights.dto.FlightResponseDto;
 import org.ideyalabs.flights.service.FlightService;
-import org.ideyalabs.reseravtion.dto.ReservationRequestDto;
-import org.ideyalabs.reseravtion.dto.ReservationResponseDto;
-import org.ideyalabs.reseravtion.service.ReservationService;
+import org.ideyalabs.reservation.dto.ReservationRequestDto;
+import org.ideyalabs.reservation.dto.ReservationResponseDto;
+import org.ideyalabs.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,9 +60,9 @@ public class ReservationController {
         return reservationService.getReservationById(id);
     }
 
-    @PostMapping("/reservations/passenger/{passengerId}/flight/{flightId}")
-    public ReservationResponseDto bookReservationByPassenger(@PathVariable("passengerId") Integer passengerId, @PathVariable("flightId") Integer flightId, @RequestBody ReservationRequestDto reservationRequestDto){
-        return reservationService.bookReservationByPassenger(passengerId, flightId, reservationRequestDto.getReservationTime());
+    @PostMapping("/reservations/passenger/{passengerId}/flight/{flightId}/")
+    public ReservationResponseDto bookReservationByPassenger(@Valid @RequestParam("flightId") Integer flightId, @RequestParam("passengerId") Long passengerId, @RequestParam("seatId") Long seatId, @RequestBody ReservationRequestDto reservationRequestDto){
+        return reservationService.bookReservationByPassenger(passengerId, flightId, seatId, reservationRequestDto.getReservationTime());
     }
 
     @PutMapping("/reservations/{id}")

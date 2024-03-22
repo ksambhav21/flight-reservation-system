@@ -1,16 +1,19 @@
-package org.ideyalabs.reseravtion.service;
+package org.ideyalabs.reservation.service;
 
 import org.ideyalabs.exception.IdNotFoundException;
 import org.ideyalabs.flights.dto.FlightRequestDto;
 import org.ideyalabs.flights.entity.Flight;
 import org.ideyalabs.flights.service.FlightService;
-import org.ideyalabs.passenger.dto.PassengerResponseDto;
 import org.ideyalabs.passenger.entity.Passenger;
 import org.ideyalabs.passenger.service.PassengerService;
-import org.ideyalabs.reseravtion.dto.ReservationRequestDto;
-import org.ideyalabs.reseravtion.dto.ReservationResponseDto;
-import org.ideyalabs.reseravtion.entity.Reservation;
-import org.ideyalabs.reseravtion.repository.ReservationRepository;
+import org.ideyalabs.reservation.dto.ReservationRequestDto;
+import org.ideyalabs.reservation.dto.ReservationResponseDto;
+import org.ideyalabs.reservation.entity.Reservation;
+import org.ideyalabs.reservation.repository.ReservationRepository;
+import org.ideyalabs.seatassignment.entity.SeatAssignment;
+import org.ideyalabs.seatassignment.repository.SeatAssignmentRepository;
+import org.ideyalabs.seats.entity.Seat;
+import org.ideyalabs.seats.service.SeatService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +30,13 @@ public class ReservationServiceImpl implements ReservationService{
     private FlightService flightService;
 
     @Autowired
+    private SeatAssignmentRepository seatAssignmentRepository;
+
+    @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private SeatService seatService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -55,27 +64,37 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public ReservationResponseDto bookReservationByPassenger(Integer passengerId, Integer flightId, LocalDateTime reservationTime){
+    public ReservationResponseDto bookReservationByPassenger(Long passengerId, Integer flightId, Long seatId, LocalDateTime reservationTime){
         Passenger passenger = modelMapper.map(passengerService.getPassengerById(Long.valueOf(passengerId)), Passenger.class);
         Flight flight = modelMapper.map(flightService.getFlightById(flightId), Flight.class);
-
+        Seat seat = modelMapper.map(seatService.getSeatById(seatId), Seat.class);
+        Optional<SeatAssignment> seatAssignment = seatAssignmentRepository.findBySeatAndFlight(seat,flight);
         if(passenger == null) {
             throw new IdNotFoundException("Passenger not found");
         }
         else if(flight == null) {
             throw new IdNotFoundException("Flight not found");
         }
+        else if(seatAssignment.isEmpty()){
+            throw new IdNotFoundException("No seat matches for the given flight");
+        }
 
-        if(flight.getAvailableSeats() <= 0) {
+        else if(flight.getAvailableSeats() <= 0) {
             throw new IdNotFoundException("No available seats for flight with ID " + flightId);
         }
+
+        else if (seatAssignment.get().getBooked()==true){
+            throw new IllegalArgumentException("Seat Already Booked");
+        }
+
 
         flight.setAvailableSeats(flight.getAvailableSeats() - 1);
         flightService.updateFlight(flightId, modelMapper.map(flight, FlightRequestDto.class));
 
+        seatAssignment.get().setBooked(true);
         Reservation reservation = Reservation.builder()
                 .passenger(passenger)
-                .flight(flight)
+                .seatAssignment(seatAssignment.get())
                 .reservationTime(reservationTime)
                 .build();
         reservationRepository.save(reservation);
@@ -94,7 +113,13 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public String deleteReservationById(Integer id) {
         Reservation existingReservation = reservationRepository.findById(id)
+
                 .orElseThrow(() -> new IdNotFoundException("Reservation with ID " + id + " not found"));
+        SeatAssignment bookesSeatAssignment =existingReservation.getSeatAssignment();
+                bookesSeatAssignment.setBooked(false);
+                Flight flight = bookesSeatAssignment.getFlight();
+        flight.setAvailableSeats(flight.getAvailableSeats() + 1);
+
         reservationRepository.delete(existingReservation);
         return "Reservation with ID " + id + " deleted successfully";
     }

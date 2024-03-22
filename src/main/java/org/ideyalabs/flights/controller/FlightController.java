@@ -1,6 +1,7 @@
 package org.ideyalabs.flights.controller;
 
 
+import jakarta.validation.Valid;
 import org.ideyalabs.flights.dto.FlightRequestDto;
 import org.ideyalabs.flights.dto.FlightResponseDto;
 import org.ideyalabs.flights.entity.Flight;
@@ -30,7 +31,7 @@ public class FlightController {
     }
 
     @PostMapping("/flight")
-    public FlightResponseDto addFlight(@RequestBody FlightRequestDto flight) {
+    public FlightResponseDto addFlight(@Valid @RequestBody FlightRequestDto flight) {
         return flightService.addFlight(flight);
     }
 
