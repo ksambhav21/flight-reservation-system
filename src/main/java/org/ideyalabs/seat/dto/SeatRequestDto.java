@@ -1,4 +1,4 @@
-package org.ideyalabs.seats.dto;
+package org.ideyalabs.seat.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

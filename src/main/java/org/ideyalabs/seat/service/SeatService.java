@@ -1,6 +1,6 @@
-package org.ideyalabs.seats.service;
+package org.ideyalabs.seat.service;
 
-import org.ideyalabs.seats.entity.Seat;
+import org.ideyalabs.seat.entity.Seat;
 
 import java.util.List;
 public interface SeatService {

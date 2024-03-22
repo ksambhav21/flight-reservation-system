@@ -1,10 +1,7 @@
 package org.ideyalabs.seatassignment.dto;
 
-import jakarta.persistence.ManyToOne;
 import org.ideyalabs.flights.dto.FlightResponseDto;
-import org.ideyalabs.flights.entity.Flight;
-import org.ideyalabs.seats.dto.SeatResponseDto;
-import org.ideyalabs.seats.entity.Seat;
+import org.ideyalabs.seat.dto.SeatResponseDto;
 
 public class SeatAssignmentResponseDto {
 

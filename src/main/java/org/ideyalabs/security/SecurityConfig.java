@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers(ADMIN_URLS).hasRole("ADMIN")
-                        .requestMatchers("/reservation-api/v1/**").hasRole("USER")
+                        .requestMatchers(USER_URLS).hasRole("USER")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint));
 

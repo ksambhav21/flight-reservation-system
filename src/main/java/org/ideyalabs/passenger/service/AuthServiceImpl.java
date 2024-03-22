@@ -9,6 +9,8 @@ import org.ideyalabs.jwt.JwtHelper;
 import org.ideyalabs.passenger.repository.PassengerRepo;
 import org.ideyalabs.security.PassengerDetailsServiceImpl;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,32 +23,25 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
 
-    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
     private ModelMapper modelMapper;
-
-
-    @Autowired
     private PassengerRepo passengerRepo;
-
-    @Autowired
     private PassengerService passengerService;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
     private PassengerDetailsServiceImpl passengerDetailsService;
 
-    @Autowired
     private AuthenticationManager manager;
-
-
-    @Autowired
     private JwtHelper helper;
-
-    /*
-     * validating the login input parameters and creating token by setting authentication
-     */
+    @Autowired
+    public AuthServiceImpl(ModelMapper modelMapper, PassengerRepo passengerRepo, PassengerService passengerService, BCryptPasswordEncoder passwordEncoder, PassengerDetailsServiceImpl passengerDetailsService, AuthenticationManager manager, JwtHelper helper) {
+        this.modelMapper = modelMapper;
+        this.passengerRepo = passengerRepo;
+        this.passengerService = passengerService;
+        this.passwordEncoder = passwordEncoder;
+        this.passengerDetailsService = passengerDetailsService;
+        this.manager = manager;
+        this.helper = helper;
+    }
 
     private void doAuthenticate(String email, String password) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
@@ -59,19 +54,23 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public JwtResponse signin(JwtRequest request) {
+        logger.info("sign in service called");
         doAuthenticate(request.getEmail(), request.getPassword());
 
         UserDetails passengerDetails = passengerDetailsService.loadUserByUsername(request.getEmail());
         String token = this.helper.generateToken(passengerDetails);
         String username = passengerDetails.getUsername();
+
         return  JwtResponse.builder()
                 .jwtToken(token)
                 .email(username).build();
+
 
     }
 
     public PassengerResponseDto createUser(PassengerRequestDto passengerRequestDto)
     {
+        logger.info("create passenger service called");
         Passenger passenger = modelMapper.map(passengerRequestDto,Passenger.class);
         passenger.setRole("USER");
         passenger.setPassword(passwordEncoder.encode(passenger.getPassword()));

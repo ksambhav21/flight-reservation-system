@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.ideyalabs.flights.entity.Flight;
-import org.ideyalabs.seats.entity.Seat;
+import org.ideyalabs.seat.entity.Seat;
 
 @Data
 @AllArgsConstructor

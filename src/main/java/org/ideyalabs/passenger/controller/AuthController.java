@@ -33,7 +33,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> addUser(@Valid @RequestBody PassengerRequestDto passengerDto)
     {
-        logger.info("sign up controller called");
+        logger.info("sign up endpoint called");
 
         return new ResponseEntity<PassengerResponseDto>(authService.createUser(passengerDto), HttpStatus.OK);
     }
@@ -41,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> login( @RequestBody JwtRequest request) {
-
+        logger.info("login endpoint hit");
         return new ResponseEntity<>(authService.signin(request), HttpStatus.OK);
     }
 

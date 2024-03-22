@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ideyalabs.flights.entity.Flight;
 import org.ideyalabs.passenger.entity.Passenger;
 import org.ideyalabs.seatassignment.entity.SeatAssignment;
-import org.ideyalabs.seats.entity.Seat;
 
 import java.time.LocalDateTime;
 
