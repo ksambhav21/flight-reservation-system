@@ -1,5 +1,8 @@
 package org.ideyalabs.exception;
 
+import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,36 +17,26 @@ import java.util.Map;
 //import io.jsonwebtoken.MalformedJwtException;
 
 @RestControllerAdvice
+@NoArgsConstructor
 public class GlobalExceptionHandler {
 
-    public GlobalExceptionHandler() {
-
-    }
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(IdNotFoundException.class)
     public ResponseEntity<String> handler(IdNotFoundException e) {
+        logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(DuplicacyException.class)
     public ResponseEntity<String> duplicateValueHandler(DuplicacyException e) {
+        logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    //    @ExceptionHandler(ExpiredJwtException.class)
-//    public ResponseEntity<String> expiredJwthandler(ExpiredJwtException e)
-//    {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//    }
-//
-//    @ExceptionHandler(MalformedJwtException.class)
-//    public ResponseEntity<String> malformedhandler(MalformedJwtException e)
-//    {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> genericExceptionHandler(Exception e) {
-
+        logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
@@ -55,9 +48,11 @@ public class GlobalExceptionHandler {
             String fieldName =((FieldError)error).getField();
             String message = error.getDefaultMessage();
             response.put(fieldName,message);
+            logger.error(message);
 
         }
         );
+
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
