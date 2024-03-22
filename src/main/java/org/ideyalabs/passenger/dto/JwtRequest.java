@@ -1,5 +1,6 @@
 package org.ideyalabs.passenger.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class JwtRequest {
 
-//    @NotEmpty(message="must not be null or empty")
+    @NotEmpty(message="must not be null or empty")
     private String email;
-//    @NotEmpty(message="must not be null or empty")
+    @NotEmpty(message="must not be null or empty")
     private String password;
 
 }

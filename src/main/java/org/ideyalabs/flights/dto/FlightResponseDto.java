@@ -12,10 +12,8 @@ import java.time.LocalDateTime;
 public class FlightResponseDto {
     private Long flightId;
     private String flightName;
-    private LocalDateTime DepartureTime;
-    private LocalDateTime ArrivalTime;
-    private Integer capacity;
-    private Integer availableSeats;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
     private String source;
     private String destination;
 }

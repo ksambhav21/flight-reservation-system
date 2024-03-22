@@ -1,9 +1,6 @@
 package org.ideyalabs.flights.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +18,9 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer flightId;
     private String flightName;
-    private LocalDateTime DepartureTime;
-    private LocalDateTime ArrivalTime;
-    private Integer capacity;
-    private Integer availableSeats;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
     private String source;
     private String destination;
+
 }
