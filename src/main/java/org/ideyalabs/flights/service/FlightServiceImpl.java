@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -49,10 +50,6 @@ public class FlightServiceImpl implements FlightService{
     public FlightResponseDto addFlight(FlightRequestDto flightRequestDto) {
         logger.info("Adding flight service is called");
         Flight flight = modelMapper.map(flightRequestDto, Flight.class);
-        if(flight.getAvailableSeats() > flight.getCapacity()){
-            logger.error("Available seats cannot be more than capacity");
-            throw new IllegalArgumentException("Available seats cannot be more than capacity");
-        }
         flightRepository.save(flight);
         return modelMapper.map(flight, FlightResponseDto.class);
     }
@@ -83,5 +80,33 @@ public class FlightServiceImpl implements FlightService{
 
         flightRepository.delete(flight);
         return "Flight with ID " + id + " has been deleted successfully";
+    }
+
+    @Override
+    public List<FlightResponseDto> getFlightByArrivalTime(LocalDateTime arrivalTime) {
+        return flightRepository.findByArrivalTime(arrivalTime).stream()
+                .map(flight -> modelMapper.map(flight, FlightResponseDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<FlightResponseDto> getFlightByDepartureTime(LocalDateTime departureTime) {
+        return flightRepository.findByDepartureTime(departureTime).stream()
+                .map(flight -> modelMapper.map(flight, FlightResponseDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<FlightResponseDto> getFlightByDestination(String destination) {
+        return flightRepository.findByDestination(destination).stream()
+                .map(flight -> modelMapper.map(flight, FlightResponseDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<FlightResponseDto> getFlightBySource(String source) {
+        return flightRepository.findBySource(source).stream()
+                .map(flight -> modelMapper.map(flight, FlightResponseDto.class))
+                .toList();
     }
 }
