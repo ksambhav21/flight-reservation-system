@@ -20,8 +20,6 @@ public class Flight {
     private String flightName;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
-    private Integer capacity;
-    private Integer availableSeats;
     private String source;
     private String destination;
 

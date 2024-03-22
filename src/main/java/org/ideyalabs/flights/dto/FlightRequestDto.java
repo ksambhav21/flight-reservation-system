@@ -22,9 +22,6 @@ public class FlightRequestDto {
 
     private LocalDateTime arrivalTime;
 
-    private Integer capacity;
-
-    private Integer availableSeats;
     @NotEmpty
     private String source;
     @NotEmpty

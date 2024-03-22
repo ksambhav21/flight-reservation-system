@@ -48,8 +48,9 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public List<ReservationResponseDto> getAllReservationsByFlight(Integer id) {
-        List<Reservation> reservations = reservationRepository.findByFlight_FlightId(id);
+    public List<ReservationResponseDto> getAllReservationsByFlight(Integer flightId) {
+        Flight flight = modelMapper.map(flightService.getFlightById(flightId), Flight.class);
+        List<Reservation> reservations = reservationRepository.findByFlight(flight);
         // Map reservations to ReservationResponseDto
         return reservations.stream()
                 .map(reservation -> modelMapper.map(reservation, ReservationResponseDto.class))
@@ -78,26 +79,20 @@ public class ReservationServiceImpl implements ReservationService{
         else if(seatAssignment.isEmpty()){
             throw new IdNotFoundException("No seat matches for the given flight");
         }
-
-        else if(flight.getAvailableSeats() <= 0) {
-            throw new IdNotFoundException("No available seats for flight with ID " + flightId);
-        }
-
         else if (seatAssignment.get().getBooked()==true){
             throw new IllegalArgumentException("Seat Already Booked");
         }
 
-
-        flight.setAvailableSeats(flight.getAvailableSeats() - 1);
-        flightService.updateFlight(flightId, modelMapper.map(flight, FlightRequestDto.class));
-
         seatAssignment.get().setBooked(true);
+        seatAssignmentRepository.save(seatAssignment.get());
         Reservation reservation = Reservation.builder()
                 .passenger(passenger)
+                .flight(flight)
                 .seatAssignment(seatAssignment.get())
                 .reservationTime(reservationTime)
                 .build();
         reservationRepository.save(reservation);
+
         return modelMapper.map(reservation, ReservationResponseDto.class);
     }
 
@@ -115,10 +110,11 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation existingReservation = reservationRepository.findById(id)
 
                 .orElseThrow(() -> new IdNotFoundException("Reservation with ID " + id + " not found"));
-        SeatAssignment bookesSeatAssignment =existingReservation.getSeatAssignment();
-                bookesSeatAssignment.setBooked(false);
-                Flight flight = bookesSeatAssignment.getFlight();
-        flight.setAvailableSeats(flight.getAvailableSeats() + 1);
+        SeatAssignment bookedSeatAssignment =existingReservation.getSeatAssignment();
+                bookedSeatAssignment.setBooked(false);
+        seatAssignmentRepository.save(bookedSeatAssignment);
+
+
 
         reservationRepository.delete(existingReservation);
         return "Reservation with ID " + id + " deleted successfully";

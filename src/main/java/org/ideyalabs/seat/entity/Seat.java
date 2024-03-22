@@ -14,5 +14,7 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seatId;
+
+    private String seatType;
    }
 

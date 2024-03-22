@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CommandLineAppStartupRunner implements CommandLineRunner {
     @Autowired
@@ -19,11 +21,14 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String...args) throws Exception {
-        Passenger admin = Passenger.builder().name("FlightAppAdmin")
+        Optional<Passenger> pg =passengerRepository.findByEmail("admin@xyz.com");
+        if(pg.isEmpty()){ Passenger admin = Passenger.builder().name("FlightAppAdmin")
                 .email("admin@xyz.com")
                 .password(passwordEncoder.encode("pass"))
-                .role("ADMIN")
+                .role("ROLE_ADMIN")
                 .build();
-        passengerRepository.save(admin);
+
+            passengerRepository.save(admin);}
+
     }
 }

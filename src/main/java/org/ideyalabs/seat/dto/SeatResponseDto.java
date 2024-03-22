@@ -12,5 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class SeatResponseDto {
     private Long seatId;
-    private Set<Flight> flights;
+    private String seatType;
+
 }

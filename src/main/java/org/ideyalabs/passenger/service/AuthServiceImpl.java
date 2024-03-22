@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
     {
         logger.info("create passenger service called");
         Passenger passenger = modelMapper.map(passengerRequestDto,Passenger.class);
-        passenger.setRole("USER");
+        passenger.setRole("ROLE_USER");
         passenger.setPassword(passwordEncoder.encode(passenger.getPassword()));
         return this.modelMapper.map(passengerRepo.save(passenger),PassengerResponseDto.class);
     }

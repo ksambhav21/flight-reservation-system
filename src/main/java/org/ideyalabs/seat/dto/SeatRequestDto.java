@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatRequestDto {
-    private Integer seatId;
+    
+    private String seatType;
 }

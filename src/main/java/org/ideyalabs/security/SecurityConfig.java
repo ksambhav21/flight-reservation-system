@@ -34,6 +34,7 @@ public class SecurityConfig {
     private static final String[] USER_URLS = { "/reservations-api/v1/**"};
 
 
+
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -54,8 +55,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers(ADMIN_URLS).hasRole("ADMIN")
                         .requestMatchers(USER_URLS).hasRole("USER")
+                        .requestMatchers(ADMIN_URLS).hasRole("ADMIN")
+
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint));
 

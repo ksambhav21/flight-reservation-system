@@ -60,7 +60,7 @@ public class ReservationController {
         return reservationService.getReservationById(id);
     }
 
-    @PostMapping("/reservations/passenger/{passengerId}/flight/{flightId}/")
+    @PostMapping("/reservations")
     public ReservationResponseDto bookReservationByPassenger(@Valid @RequestParam("flightId") Integer flightId, @RequestParam("passengerId") Long passengerId, @RequestParam("seatId") Long seatId, @RequestBody ReservationRequestDto reservationRequestDto){
         return reservationService.bookReservationByPassenger(passengerId, flightId, seatId, reservationRequestDto.getReservationTime());
     }

@@ -1,7 +1,6 @@
 package org.ideyalabs.seatassignment.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +12,11 @@ import org.ideyalabs.seat.entity.Seat;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class SeatAssignment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seatAssignmentId;
 
     @ManyToOne(cascade=CascadeType.ALL)
