@@ -30,7 +30,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS={"/auth-api/v1/**"};
-    private static final String[] ADMIN_URLS = {"/passengers-api/v1/**", "/flight-api/v1/**"};
+    private static final String[] ADMIN_URLS = {"/passengers-api/v1/**", "/flight-api/v1/**","/seats-api/v1/**"};
+    private static final String[] USER_URLS = { "/reservations-api/v1/**"};
+
 
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;

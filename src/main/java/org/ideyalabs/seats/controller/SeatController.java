@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/seats")
+@RequestMapping("/seats-api/v1")
 public class SeatController {
 
     @Autowired
     private SeatService seatService;
 
-    @PostMapping
-    public Seat createSeat(@RequestBody Seat seat) {
-        return seatService.createSeat(seat);
+    @PostMapping("/{flightId}")
+    public Seat createSeat(@RequestBody Seat seat,@PathVariable Integer flightId) {
+        return seatService.createSeat(seat,flightId);
     }
 
     @GetMapping("/{id}")
