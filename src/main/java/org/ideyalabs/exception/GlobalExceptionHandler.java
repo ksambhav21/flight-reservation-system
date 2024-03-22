@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicacyException.class)
-    public ResponseEntity<String> duplicateValueHandler(DuplicacyException e) {
+        public ResponseEntity<String> duplicateValueHandler(DuplicacyException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
